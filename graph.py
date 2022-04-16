@@ -42,6 +42,7 @@ plt.fill_between(dates, u, color=color3)
 
 plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower center', ncol=3, borderaxespad=0.)
 plt.xticks(range(1, len(dates), int(len(dates)/7)))
+
 plt.xlim(dates[0], dates[-1])
 plt.ylim(y[0], y[-1]+100000)
 plt.show()
