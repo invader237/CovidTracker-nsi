@@ -83,6 +83,7 @@ class Application:
                 "Mayotte": "06",
                 "Saint-Barthélemy": "07",
                 "Saint-Martin": "08"}
+        scrap.csv_download
         self.root.destroy()
         graph.start(self.num_reg[self.option_var.get()])
         
