@@ -2,10 +2,12 @@ import csv
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.ticker as mtick
+import matplotlib.ticker as ticker
 
 def start(reg):
-    cumul_vacs_plot(reg)
-    evol_vacs_cov(reg)
+    #cumul_vacs_plot(reg)
+    #evol_vacs_cov(reg)
     vacs_age(reg, '2022-03-22')
 
     
@@ -149,32 +151,32 @@ def vacs_age(reg,date):
     vaccins_covid69=selection(table, lambda ligne:ligne[0]==str(reg) and ligne[1]=="69" or ligne[1]=="74" and ligne[2]==date)
     vaccins_covid79=selection(table, lambda ligne:ligne[0]==str(reg) and ligne[1]=="79" or ligne[1]=="80" and ligne[2]==date)
     
-    Y4_rappel=[float(ligne[29]) for ligne in vaccins_covid4]
-    Y17_rappel=[float(ligne[29]) for ligne in vaccins_covid17]
-    Y24_rappel=[float(ligne[29]) for ligne in vaccins_covid24]
-    Y39_rappel=[float(ligne[29]) for ligne in vaccins_covid39]
-    Y59_rappel=[float(ligne[29]) for ligne in vaccins_covid59]
-    Y64_rappel=[float(ligne[29]) for ligne in vaccins_covid64]
-    Y69_rappel=[float(ligne[29]) for ligne in vaccins_covid69]
-    Y79_rappel=[float(ligne[29]) for ligne in vaccins_covid79]
+    Y4_rappel=[float(ligne[33]) for ligne in vaccins_covid4]
+    Y17_rappel=[float(ligne[33]) for ligne in vaccins_covid17]
+    Y24_rappel=[float(ligne[33]) for ligne in vaccins_covid24]
+    Y39_rappel=[float(ligne[33]) for ligne in vaccins_covid39]
+    Y59_rappel=[float(ligne[33]) for ligne in vaccins_covid59]
+    Y64_rappel=[float(ligne[33]) for ligne in vaccins_covid64]
+    Y69_rappel=[float(ligne[33]) for ligne in vaccins_covid69]
+    Y79_rappel=[float(ligne[33]) for ligne in vaccins_covid79]
     
-    Y4_tot=[float(ligne[28]) for ligne in vaccins_covid4]
-    Y17_tot=[float(ligne[28]) for ligne in vaccins_covid17]
-    Y24_tot=[float(ligne[28]) for ligne in vaccins_covid24]
-    Y39_tot=[float(ligne[28]) for ligne in vaccins_covid39]
-    Y59_tot=[float(ligne[28]) for ligne in vaccins_covid59]
-    Y64_tot=[float(ligne[28]) for ligne in vaccins_covid64]
-    Y69_tot=[float(ligne[28]) for ligne in vaccins_covid69]
-    Y79_tot=[float(ligne[28]) for ligne in vaccins_covid79]
+    Y4_tot=[float(ligne[32]) for ligne in vaccins_covid4]
+    Y17_tot=[float(ligne[32]) for ligne in vaccins_covid17]
+    Y24_tot=[float(ligne[32]) for ligne in vaccins_covid24]
+    Y39_tot=[float(ligne[32]) for ligne in vaccins_covid39]
+    Y59_tot=[float(ligne[32]) for ligne in vaccins_covid59]
+    Y64_tot=[float(ligne[32]) for ligne in vaccins_covid64]
+    Y69_tot=[float(ligne[32]) for ligne in vaccins_covid69]
+    Y79_tot=[float(ligne[32]) for ligne in vaccins_covid79]
     
-    Y4_part=[float(ligne[27]) for ligne in vaccins_covid4]
-    Y17_part=[float(ligne[27]) for ligne in vaccins_covid17]
-    Y24_part=[float(ligne[27]) for ligne in vaccins_covid24]
-    Y39_part=[float(ligne[27]) for ligne in vaccins_covid39]
-    Y59_part=[float(ligne[27]) for ligne in vaccins_covid59]
-    Y64_part=[float(ligne[27]) for ligne in vaccins_covid64]
-    Y69_part=[float(ligne[27]) for ligne in vaccins_covid69]
-    Y79_part=[float(ligne[27]) for ligne in vaccins_covid79]
+    Y4_part=[float(ligne[31]) for ligne in vaccins_covid4]
+    Y17_part=[float(ligne[31]) for ligne in vaccins_covid17]
+    Y24_part=[float(ligne[31]) for ligne in vaccins_covid24]
+    Y39_part=[float(ligne[31]) for ligne in vaccins_covid39]
+    Y59_part=[float(ligne[31]) for ligne in vaccins_covid59]
+    Y64_part=[float(ligne[31]) for ligne in vaccins_covid64]
+    Y69_part=[float(ligne[31]) for ligne in vaccins_covid69]
+    Y79_part=[float(ligne[31]) for ligne in vaccins_covid79]
     
     x=['75 ans et plus', '65-74 ans', '55-64 ans', '50-54 ans', '30-49 ans', '18-29 ans', '12-17 ans', '0-11 ans']
     
