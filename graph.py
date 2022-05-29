@@ -8,7 +8,9 @@ import matplotlib.ticker as ticker
 def start(reg):
     #cumul_vacs_plot(reg)
     #evol_vacs_cov(reg)
-    vacs_age(reg, '2022-03-22')
+    #vacs_age(reg, '2022-03-22')
+    #vacs_sex(reg, '2022-03-22')
+    best_vacs_cov('2022-05-22')
 
     
 def csv_finder():
@@ -221,10 +223,66 @@ def vacs_age(reg,date):
     plt.barh(x,tot,left=np.array(rappel),color="dodgerblue", label="Personnes totalement vaccinées", zorder=3)
     plt.barh(x,rappel,color="tab:blue",label="Personnes vaccinées (rappel)", zorder=3)
     
-    plt.legend(loc='upper left',bbox_to_anchor=(-0.1,1.1,2,0),ncol=4)
+    plt.legend(bbox_to_anchor=(0., 0.99, 1., .102), loc='center',ncol=2)
        
-    plt.title('Vaccinations par âge',loc="left",fontsize=25,y=1.1)
+    plt.title('Vaccinations par âge',loc="center",fontsize=25,y=1.08)
     plt.savefig("image3.jpg",bbox_inches='tight')
+    plt.show()
+
+
+def vacs_sex(reg,date):
+    selection4 = selection(table,lambda ligne:ligne[0]==str(reg) and ligne[1]=='0' and ligne[2]==date)[0]
+    categories = ['Couverture vaccinale homme','Couverture vaccinale femme','Couverture vaccinale ensemble']
+    donnes_1 = [float(selection4[9]),float(selection4[18]),float(selection4[27])]
+    donnes_complet = [float(selection4[10]),float(selection4[19]),float(selection4[28])]
+    donnes_rappel = [float(selection4[11]),float(selection4[20]),float(selection4[29])]
+    X=np.arange(3)
+    plt.bar(X + 0.00, donnes_1, color = 'g', width = 0.1,label = 'Partiellement vaccinés')
+    plt.bar(X + 0.20, donnes_complet, color = 'r', width = 0.1,tick_label=categories,label = 'Complètement vaccinés')
+    plt.bar(X + 0.40, donnes_rappel, color = 'b', width = 0.1,label = 'Vaccinés + rappel')
+    plt.xticks(fontsize = 8, rotation = 45)
+    plt.yticks((0,20,40,60,80,100),['0 %','20 %','40 %','60 %','80 %','100 %'])
+    plt.ylabel('Couverture vaccinale')
+    plt.title('Vaccinations par sex',loc="center",fontsize=25,y=1.1)
+    plt.grid(True,axis='y')
+    plt.legend()
+    plt.savefig('image4.jpg',bbox_inches='tight')
+    plt.show()
+
+
+def best_vacs_cov(date):
+    reg={'1' : 'Guadeloupe', '2' : 'Martinique', '3' : 'Guyane', '4' : 'La Réunion', '11' : 'Ile-de-\nFrance', '24' : 'Centre-Val\n de Loire', '27' : 'Bourgogne-\nFranche-\nComté', '28' : 'Normandie', '32' : 'Hauts-de-\nFrance', '44' : 'Grand Est', '52' : 'Pays de \nla Loire', '53' : 'Bretagne', '75' : 'Nouvelle-\nAquitaine', '76' : 'Occitanie', '84' : 'Auvergne-\nRhône-Alpes', '93' : 'Provence-Alpes-\nCôte d’Azur', '94' : 'Corse', '5' : 'Saint-Pierre-\net-Miquelon', '6' : 'Mayotte', '7' : 'Saint-\nBarthélemy', '8' : 'Saint-\nMartin'}
+    
+    fig, ax = plt.subplots()
+    
+    vaccin=selection(table, lambda ligne:ligne[1]=="0" and ligne[2]==date)
+    meuilleures_regions=sorted(vaccin, key=lambda ligne:float(ligne[33]),reverse=True)
+    
+    X = [meuilleures_regions[i][0] for i in range(5)]
+    x = [reg[i] for i in X]
+    
+    x_pos = [i for i  in range(len(x))]
+    effectifs = [float(meuilleures_regions[i][33])/100000 for i in range(5)]
+    
+    plt.xlabel("Régions")
+    plt.ylabel("Couverture vaccinale (dose de rappel)")
+    
+    plt.xticks(x_pos, x)
+    
+    ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
+    
+    plt.bar(x_pos, effectifs, color='b', zorder=3)
+
+    def ajoutlabels(x,y):
+        for i in range(len(x)):
+            plt.text(i,y[i],y[i])
+    ajoutlabels(x, effectifs)
+    
+    plt.grid(which='major', linestyle=':', axis='y', linewidth='0.5', color='gray', zorder=0)
+    
+    plt.title('Les 5 meuilleures régions par couverture vaccinale',fontsize=15,backgroundcolor='white')
+    plt.tight_layout()
+    plt.savefig("image6.jpg") 
     plt.show()
 
 start(44)
